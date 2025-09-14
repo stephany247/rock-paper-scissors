@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;1,600;1,700&display=swap");
+@import "tailwindcss";
+
+@theme {
+
+  /* primary  */
+  --color-gold-500: hsl(39, 89%, 49%);
+  --color-gold-600: hsl(28, 76%, 44%);
+
+  --color-red-600: hsl(349, 71%, 52%);
+  --color-red-800: hsl(347, 75%, 35%);
+
+  --color-blue-500: hsl(230, 89%, 62%);
+  --color-blue-700: hsl(229, 64%, 46%);
+
+  --color-purple-600: hsl(261, 73%, 60%);
+  --color-purple-700: hsl(261, 51%, 44%);
+
+  --color-light-blue-400: hsl(189, 59%, 53%);
+  --color-light-blue-500: hsl(194, 58%, 42%);
+
+  /* neutral */
+  --color-navy-900: hsl(229, 25%, 31%); /*dark-text*/
+  --color-blue-700: hsl(229, 64%, 46%); /*score text*/
+  /* --color-gray-600: hsl(246, 11%, 37%); header outline */
+
+  /* background */
+  --color-dark-blue: hsl(214, 47%, 23%);
+  --color-darker-blue: hsl(237, 48%, 15%);
+
+  /* - Radial Gradient: hsl(214, 47%, 23%) to hsl(237, 48%, 15%) */
+
+  /* shadows  */
+  --inset-shadow-md: inset 0 0.3em rgba(0, 0, 0, 0.25);
+  --shadow-gold: 0 0.5em hsl(28, 76%, 44%);
+  --shadow-red: 0 0.5em hsl(347, 75%, 35%);
+  --shadow-blue: 0 0.5em hsl(229, 64%, 46%);
+  --shadow-purple: 0 0.5em hsl(261, 51%, 44%);
+  --shadow-light-blue: 0 0.5em hsl(194, 58%, 42%);
+
+  /* fonts */
+  --font-barlow: "Barlow Semi Condensed", sans-serif;
+}
+
+.radial-grad {
+  @apply bg-radial-[at_50%_75%] from-dark-blue from-10% to-darker-blue to-90%;
+}
+
+#root {
+  /* max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center; */
+  @apply container p-6 mx-auto;
+}
+
+.who-picked {
+  @apply  text-center text-white text-lg;
+}
