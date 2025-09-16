@@ -11,24 +11,25 @@ interface BoardProps {
 const Board: FC<BoardProps> = ({ mode, onPick }) => {
   return mode === "default" ? (
     // Triangle layout
-    <div
-      className="relative w-80 sm:w-92 h-80 sm:h-92 my-24 mx-auto bg-[url(/bg-triangle.svg)] bg-no-repeat bg-center"
-    >
-      <div className="player-choice absolute -top-6 right-0">
+    <div className="grid grid-cols-3 grid-rows-3 w-80 h-80 sm:w-92 sm:h-92 md:w-120 md:h-120 my-24 mx-auto bg-[url(/bg-triangle.svg)] bg-no-repeat bg-center bg-size-[90%]">
+      {/* scissors (top middle) */}
+      <div className="flex items-center justify-center col-start-3 row-start-1">
         <Choice type="scissors" onPick={onPick} />
       </div>
-      <div className="player-choice absolute -top-6 left-0">
+
+      {/* paper (top left) */}
+      <div className="flex items-center justify-center col-start-1 row-start-1">
         <Choice type="paper" onPick={onPick} />
       </div>
-      <div className="player-choice absolute bottom-8 left-1/2 -translate-x-1/2">
+
+      {/* rock (bottom middle) */}
+      <div className="flex items-center justify-center col-start-2 row-start-3">
         <Choice type="rock" onPick={onPick} />
       </div>
     </div>
   ) : (
     // Pentagon layout
-    <div
-      className="relative w-100 h-100 my-24 mx-auto bg-[url(/bg-pentagon.svg)] bg-no-repeat bg-center"
-    >
+    <div className="relative w-78 h-78 sm:w-100 sm:h-100 my-24 mx-auto bg-[url(/bg-pentagon.svg)] bg-no-repeat bg-center">
       <div className="player-choice absolute -top-4 left-1/2 -translate-x-1/2">
         <Choice type="scissors" onPick={onPick} extended />
       </div>

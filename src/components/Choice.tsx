@@ -22,11 +22,11 @@ const images = {
 const Choice: FC<ChoiceProps> = ({ type, onPick, extended }) => {
   const sizeClasses = extended
     ? "w-28 h-28 sm:w-32 sm:h-32 border-12" // smaller for bonus mode
-    : "w-34 h-34 sm:w-40 sm:h-40 border-16"; // default mode
+    : `${onPick ? "w-full h-full" : "w-34 h-34 sm:w-40 sm:h-40 lg:w-60 lg:h-60"}  border-16 lg:border-24`; // default mode
 
   return (
     <button
-      className={`${sizeClasses} rounded-full flex items-center justify-center bg-white inset-shadow-md ${onPick ? "cursor-pointer" : ""} ${
+      className={`${sizeClasses} rounded-full flex items-center justify-center bg-white ${onPick ? "cursor-pointer inset-shadow-md" : "inner-shadow-sm"} ${
         type === "rock"
           ? "border-red-600 shadow-red"
           : type === "paper"
@@ -41,7 +41,7 @@ const Choice: FC<ChoiceProps> = ({ type, onPick, extended }) => {
       data-flip-id={type}
     //   title={type}
     >
-      <img src={images[type]} alt={type} className={`${extended ? "w-12 h-12":"w-16 h-16"}`} />
+      <img src={images[type]} alt={type} className={`${extended ? "w-12 h-12":"w-1/2 h-1/2"}`} />
     </button>
   );
 };

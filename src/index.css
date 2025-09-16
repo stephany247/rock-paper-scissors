@@ -57,3 +57,11 @@
 .who-picked {
   @apply  text-center text-white text-lg;
 }
+
+/* .ring-element {
+  @apply absolute inset-0 rounded-full border-[30px] border-white/20 -z-10;
+} */
+.ring-element {
+  @apply absolute inset-0 rounded-full bg-white/30 md:bg-white/40;
+}
+

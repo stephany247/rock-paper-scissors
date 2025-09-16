@@ -25,59 +25,104 @@ function App() {
       ? ["rock", "paper", "scissors"]
       : ["rock", "paper", "scissors", "lizard", "spock"];
 
+  // const handlePick = (choice: string) => {
+  //   // capture the board state before React moves things
+  //   // const state = Flip.getState(".choice");
+
+  //   setPlayerChoice(choice);
+  //   setStep(2); // go to step 2 (player picked)
+
+  //   // animate from board → player slot
+  //   // Flip.from(state, {
+  //   //   duration: 0.6,
+  //   //   ease: "power2.inOut",
+  //   //   absolute: true,
+  //   //   nested: true,
+  //   //   scale: true,
+  //   // });
+
+  //   const house = choices[Math.floor(Math.random() * choices.length)];
+
+  //   // after 1 second → show house pick
+  //   setTimeout(() => {
+  //     setHouseChoice(house);
+  //     setStep(3);
+
+  //     // after another 1 second → calculate winner
+  //     // setTimeout(() => {
+  //       if (choice === house) {
+  //         setWinner("draw");
+  //       } else {
+  //         const rules: Record<string, string[]> = {
+  //           rock: ["scissors", "lizard"],
+  //           paper: ["rock", "spock"],
+  //           scissors: ["paper", "lizard"],
+  //           lizard: ["spock", "paper"],
+  //           spock: ["scissors", "rock"],
+  //         };
+
+  //         if (rules[choice].includes(house)) {
+  //           setWinner("player");
+  //           setScore((prev) => prev + 1);
+  //         } else {
+  //           setWinner("house");
+  //         }
+  //       }
+
+  //       setStep(4); // show result
+  //     // }, 1000);
+  //   }, 1000);
+  // };
+
   const handlePick = (choice: string) => {
     setPlayerChoice(choice);
-    // Capture current position of the choice element
-    // const state = Flip.getState(".player-choice");
-      const state = Flip.getState(`[data-flip-id="${choice}"]`);
-
-    setStep(2); // go to step 2 (player picked)
-
-    // Animate from previous to new position
-    requestAnimationFrame(() => {
-      Flip.from(state, {
-        duration: 1.8,
-        ease: "power3.inOut",
-        scale: true,
-      });
-    });
+    setStep(2);
 
     const house = choices[Math.floor(Math.random() * choices.length)];
 
-    // after 1 second → show house pick
-    setTimeout(() => {
-      setHouseChoice(house);
-      setStep(3);
+    const tl = gsap.timeline();
 
-      // after another 1 second → calculate winner
-      setTimeout(() => {
-        if (choice === house) {
-          setWinner("draw");
-        } else {
-          const rules: Record<string, string[]> = {
-            rock: ["scissors", "lizard"],
-            paper: ["rock", "spock"],
-            scissors: ["paper", "lizard"],
-            lizard: ["spock", "paper"],
-            spock: ["scissors", "rock"],
-          };
+    // after 1s, reveal house
+    tl.to(
+      {},
+      {
+        duration: 1,
+        onComplete: () => {
+          setHouseChoice(house);
+          setStep(3);
+        },
+      }
+    );
 
-          if (rules[choice].includes(house)) {
-            setWinner("player");
-            setScore((prev) => prev + 1);
+    // after another 1s, decide winner
+    tl.to(
+      {},
+      {
+        duration: 1,
+        onComplete: () => {
+          if (choice === house) {
+            setWinner("draw");
           } else {
-            setWinner("house");
+            const rules: Record<string, string[]> = {
+              rock: ["scissors", "lizard"],
+              paper: ["rock", "spock"],
+              scissors: ["paper", "lizard"],
+              lizard: ["spock", "paper"],
+              spock: ["scissors", "rock"],
+            };
+
+            if (rules[choice].includes(house)) {
+              setWinner("player");
+              setScore((prev) => prev + 1);
+            } else {
+              setWinner("house");
+            }
           }
-        }
-
-        setStep(4); // show result
-      }, 1000);
-    }, 1000);
+          setStep(4);
+        },
+      }
+    );
   };
-
-  // const resetGame = () => {
-  //   setWinner(null);
-  // };
 
   const resetGame = () => {
     setPlayerChoice(null);
@@ -86,73 +131,204 @@ function App() {
     setStep(1);
   };
 
-  // let score = 12;
+  useEffect(() => {
+    if (step === 2 && playerChoice) {
+      gsap.fromTo(
+        ".player-choice",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }
+      );
+    }
+  }, [step, playerChoice]);
 
+  // Animate house pick (step 3)
   // useEffect(() => {
-  //   if (step === 2 && playerChoice) {
+  //   if (step === 3 && houseChoice) {
   //     gsap.fromTo(
-  //       ".player-choice",
-  //       { scale: 0, opacity: 0 },
-  //       { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }
+  //       ".house-choice",
+  //       { opacity: 0.4, scale: 0.8 },
+  //       {
+  //         opacity: 1,
+  //         scale: 1,
+  //         duration: 0.6,
+  //         ease: "back.out(1.7)",
+  //         onComplete: () => {
+  //           gsap.to(".house-choice", {
+  //             x: 10,
+  //             duration: 0.3,
+  //             ease: "power1.inOut",
+  //             delay: 0.7,
+  //           });
+  //           gsap.to(".house-choice-block > h2", {
+  //             x: 10,
+  //             duration: 0.3,
+  //             delay: 0.7,
+  //           });
+  //           gsap.to(".player-choice", {
+  //             x: -10,
+  //             duration: 0.3,
+  //             ease: "power1.inOut",
+  //             delay: 0.7,
+  //           });
+  //           gsap.to(".player-choice-block > h2", {
+  //             x: -10,
+  //             duration: 0.3,
+  //             delay: 0.7,
+  //           });
+  //         },
+  //         // delay: 0.5, // small suspense delay
+  //       }
   //     );
   //   }
-  // }, [step, playerChoice]);
+  // }, [step, houseChoice]);
 
-  // useEffect(() => {
-  //   if (step === 2 && playerChoice) {
-  //     gsap.fromTo(
-  //       ".player-choice",
-  //       { x: -300, y: 200, scale: 1, opacity: 0 }, // starting offset (adjust these)
-  //       { x: 0, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-  //     );
-  //   }
-  // }, [step, playerChoice]);
+  useEffect(() => {
+    if (step === 3 && houseChoice) {
+      const tl = gsap.timeline();
+
+      // House scales/fades in
+      tl.fromTo(
+        ".house-choice",
+        { opacity: 0.4, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
+      );
+
+      // Fade in Result (text block with "You Win/You Lose")
+      tl.fromTo(
+        ".result",
+        { opacity: 0, scale: 0.9, y: 80 },
+        { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power1.out" }
+      );
+      // Slide circles in with ease
+      tl.to(
+        [".house-choice", ".player-choice"],
+        {
+          x: (i) => (i === 0 ? 20 : -20), // house +10, player -10
+          duration: 0.3,
+          ease: "power1.inOut",
+        },
+        "<"
+      );
+
+      // Slide texts in without ease (linear)
+      tl.to(
+        [".house-choice-block > h2", ".player-choice-block > h2"],
+        {
+          x: (i) => (i === 0 ? 20 : -20),
+          duration: 0.3,
+          ease: "none", // 👈 exactly like your code
+        },
+        "<" // run at same time as circles
+      );
+    }
+  }, [step, houseChoice]);
+
+  //   useEffect(() => {
+  //   gsap.fromTo(
+  //     ".score-value",
+  //     { scale: 1.5, opacity: 0.7 },
+  //     { scale: 1, opacity: 1, duration: 0.4, ease: "bounce.out" }
+  //   );
+  // }, [score]);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 640; // Tailwind "sm" breakpoint
+    if (step === 4 && winner) {
+      gsap.fromTo(
+        ".ring-a",
+        { scale: 0.8, opacity: 0 },
+        { scale: 1.4, opacity: 0.2, duration: 0.6, ease: "power2.out" }
+      );
+      gsap.fromTo(
+        ".ring-b",
+        { scale: 0.8, opacity: 0 },
+        {
+          scale: 1.8,
+          // opacity: 0.25,
+          opacity: 0.1,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power2.out",
+        }
+      );
+      gsap.fromTo(
+        ".ring-c",
+        { scale: 0.8, opacity: 0 },
+        {
+          scale: 2.2,
+          // opacity: 0.15,
+          opacity: 0.05,
+          duration: 1,
+          delay: 0.4,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, [step, winner]);
 
   return (
     <>
-      <Scoreboard score={score} mode={mode} />
-
-      {/* {!winner && (
-        <div className="choices">
-          {choices.map((choice) => (
-            <Choice key={choice} type={choice as any} onPick={handlePick} />
-          ))}
-        </div>
-      )} */}
-
-      {step === 1 && <Board mode={mode} onPick={handlePick} />}
-      {step >= 2 && (
-        <div className="flex justify-between items-center mt-10 max-w-3xl mx-auto">
-          {/* Player pick */}
-          <div className="flex flex-col items-center justify-center gap-8">
-            <h2 className="hidden md:block who-picked">You Picked</h2>
-            <div className="player-choice">
-              {playerChoice && <Choice type={playerChoice as any} />}
+      <main className="min-h-screen flex flex-col items-center">
+        <Scoreboard score={score} mode={mode} />
+        {step === 1 && <Board mode={mode} onPick={handlePick} />}
+        {step >= 2 && (
+          <div className="grid grid-cols-2 md:grid-cols-3 md:grid-rows-1 items-start mt-10 max-w-3xl mx-auto">
+            {/* Player pick */}
+            <div className="player-choice-block flex flex-col items-center justify-center gap-8">
+              <h2 className="hidden md:block who-picked">You Picked</h2>
+              <div className="player-choice relative">
+                {playerChoice && (
+                  <>
+                    <Choice type={playerChoice as any} />
+                    {winner === "player" && (
+                      <div className="absolute inset-0 flex items-center justify-center -z-20">
+                        <span className="ring-element ring-a opacity-40" />
+                        <span className="ring-element ring-b opacity-25" />
+                        <span className="ring-element ring-c opacity-15" />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+              <h2 className="block md:hidden who-picked">You Picked</h2>
             </div>
-            <h2 className="block md:hidden who-picked">You Picked</h2>
+            {step === 4 && <Result winner={winner} onPlayAgain={resetGame} />}
+
+            {/* House pick */}
+            <div className="house-choice-block md:col-start-3 flex flex-col items-center justify-center gap-8">
+              <h2 className="hidden md:block who-picked">The House Picked</h2>
+              {step >= 3 ? (
+                <div className="house-choice relative">
+                  {houseChoice && (
+                    <>
+                      <Choice type={houseChoice as any} />
+                      {winner === "house" && (
+                        <div className="absolute inset-0 flex items-center justify-center -z-20">
+                          <span className="ring-element ring-a opacity-40" />
+                          <span className="ring-element ring-b opacity-25" />
+                          <span className="ring-element ring-c opacity-15" />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="w-34 h-34 sm:w-40 sm:h-40 lg:w-60 lg:h-60 bg-darker-blue/20 rounded-full" /> // placeholder before reveal
+              )}
+              <h2 className="block md:hidden who-picked">The House Picked</h2>
+            </div>
           </div>
+        )}
 
-          {/* House pick */}
-          <div className="house-choice flex flex-col items-center justify-center gap-8">
-            <h2 className="hidden md:block who-picked">The House Picked</h2>
-            {step >= 3 ? (
-              <Choice type={houseChoice as any} />
-            ) : (
-              <div className="w-32 h-32 bg-black/20 rounded-full" /> // placeholder before reveal
-            )}
-            <h2 className="block md:hidden who-picked">The House Picked</h2>
-          </div>
-        </div>
-      )}
-
-      {step === 4 && <Result winner={winner} onPlayAgain={resetGame} />}
-
-      {/* Rules button */}
-      {step === 1 && (
-        <div className="mt-6 flex justify-between">
+        {/* Rules button */}
+        {/* {step === 1 && ( */}
+        <div className="mt-auto flex justify-between w-full">
           <button
             className="bg-white w-40 py-2 rounded-xl uppercase"
-            onClick={() => setMode(mode === "default" ? "extended" : "default")}
+            onClick={() => {
+              setMode(mode === "default" ? "extended" : "default");
+              resetGame();
+            }}
             title={`Switch to ${
               mode === "default" ? "extended" : "default"
             } mode`}
@@ -168,14 +344,15 @@ function App() {
             Rules
           </button>
         </div>
-      )}
+        {/* )} */}
 
-      {/* Rules Modal */}
-      <RulesModal
-        open={rulesOpen}
-        mode={mode}
-        onClose={() => setRulesOpen(false)}
-      />
+        {/* Rules Modal */}
+        <RulesModal
+          open={rulesOpen}
+          mode={mode}
+          onClose={() => setRulesOpen(false)}
+        />
+      </main>
     </>
   );
 }
