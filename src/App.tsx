@@ -7,6 +7,7 @@ import Board from "./components/Board";
 import gsap from "gsap";
 import { Flip } from "gsap/Flip";
 gsap.registerPlugin(Flip);
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [mode, setMode] = useState<"default" | "extended">("default");
@@ -176,8 +177,9 @@ function App() {
   }, [step, winner]);
 
   return (
-    <div className="overflow-x-hidden">
-      <main className="min-h-screen flex flex-col items-center p-6 mx-auto">
+    <main className="overflow-x-hidden">
+      <Analytics />
+      <section className="min-h-screen flex flex-col items-center p-6 mx-auto">
         <Scoreboard score={score} mode={mode} onReset={() => setScore(0)} />
         {step === 1 && <Board mode={mode} onPick={handlePick} />}
         {step >= 2 && (
@@ -258,8 +260,8 @@ function App() {
           mode={mode}
           onClose={() => setRulesOpen(false)}
         />
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
 
