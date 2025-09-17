@@ -42,8 +42,8 @@ export default defineConfig({
         short_name: "Rock Paper Scissors",
         start_url: ".",
         display: "standalone",
-        background_color: "hsl(229, 25%, 31%)",
-        theme_color: "hsl(229, 64%, 46%)",
+        background_color: "hsl(214, 47%, 23%)",
+        theme_color: "hsl(237, 48%, 15%)",
         icons: [
           {
             src: "/icons/icon-192x192.png",
