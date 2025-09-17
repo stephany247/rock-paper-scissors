@@ -2,13 +2,15 @@ import { useEffect, useState, type FC } from "react";
 import defaultImg from "../assets/images/logo.svg";
 import bonusImg from "../assets/images/logo-bonus.svg";
 import gsap from "gsap";
+import reloadIcon from "../assets/images/tabler--reload.png";
 
 interface ScoreboardProps {
   score: number;
   mode: "default" | "extended";
+  onReset: () => void;
 }
 
-const Scoreboard: FC<ScoreboardProps> = ({ score, mode }) => {
+const Scoreboard: FC<ScoreboardProps> = ({ score, mode, onReset }) => {
   const [prevScore, setPrevScore] = useState(score);
   const [displayScore, setDisplayScore] = useState(score);
   const [showIncrement, setShowIncrement] = useState(false);
@@ -85,6 +87,16 @@ const Scoreboard: FC<ScoreboardProps> = ({ score, mode }) => {
     setPrevScore(score);
   }, [score]);
 
+  useEffect(() => {
+  // score changed
+  gsap.fromTo(
+    ".score-value",
+    { scale: 1.4, opacity: 0.6 },
+    { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }
+  );
+}, [score]);
+
+
   return (
     <header className="border-3 border-gray-600 rounded-lg p-3 flex justify-between max-h-30 max-w-3xl w-full mx-auto">
       <img
@@ -102,6 +114,21 @@ const Scoreboard: FC<ScoreboardProps> = ({ score, mode }) => {
             <span className="score-increment inline-block absolute -right-2 top-1 -translate-x-1/2 -translate-y-1/2 font-bold text-gray-500 text-3xl">
               +1
             </span>
+          )}
+          {/* 👇 reset button */}
+          {score > 0 && (
+            <button
+              onClick={() => {
+                onReset();
+                setDisplayScore(0);
+                setPrevScore(0);
+                setShowIncrement(false);
+              }}
+              className="mt-2 p-2 bg-gray-300/80 rounded-full hover:bg-gray-300 absolute -bottom-1 -right-0 cursor-pointer transition-all duration-200 hover:scale-110 hover:rotate-90"
+            >
+              {/* Reset */}
+              <img src={reloadIcon} alt="reload icon" className="h-4 w-4" />
+            </button>
           )}
         </div>
       </div>

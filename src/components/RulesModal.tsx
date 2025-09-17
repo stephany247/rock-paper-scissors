@@ -59,7 +59,7 @@ const RulesModal: FC<RulesModalProps> = ({ open, mode, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-white sm:bg-black/50 flex items-center justify-center"
+      className="fixed inset-0 bg-white sm:bg-black/50 flex items-center justify-center z-20"
       onClick={onClose} // click backdrop closes
     >
       <div

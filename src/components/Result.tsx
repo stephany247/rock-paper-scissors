@@ -49,7 +49,7 @@ const Result: FC<ResultProps> = ({ winner, onPlayAgain }) => {
   return (
     <div
       ref={resultRef}
-      className="result col-span-2 row-start-2  md:col-span-1 md:row-span-1 space-y-4 mt-auto md:my-auto flex flex-col items-center z-20"
+      className="result col-span-2 row-start-2  md:col-span-1 md:row-span-1 space-y-4 mt-auto md:my-auto flex flex-col items-center z-10"
     >
       <h2 className="text-5xl md:text-6xl text-white text-center">
         {getMessage()}

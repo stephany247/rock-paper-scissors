@@ -272,7 +272,7 @@ function App() {
   return (
     <div className="overflow-x-hidden">
       <main className="min-h-screen flex flex-col items-center p-6 mx-auto">
-        <Scoreboard score={score} mode={mode} />
+        <Scoreboard score={score} mode={mode} onReset={() => setScore(0)} />
         {step === 1 && <Board mode={mode} onPick={handlePick} />}
         {step >= 2 && (
           <div className="m-auto grid grid-cols-2 grid-rows-2 md:grid-rows-1 md:grid-cols-3 items-start max-w-4xl w-full mx-auto">
@@ -329,7 +329,7 @@ function App() {
         {/* {step === 1 && ( */}
         <div className="mt-auto flex justify-between w-full">
           <button
-            className="bg-white w-40 py-2 rounded-xl uppercase"
+            className="bg-white w-40 py-2 rounded-xl uppercase cursor-pointer"
             onClick={() => {
               setMode(mode === "default" ? "extended" : "default");
               resetGame();
@@ -342,7 +342,7 @@ function App() {
           </button>
 
           <button
-            className="border-2 border-white/60 w-36 py-2 rounded-xl text-white/80 uppercase tracking-widest"
+            className="border-2 border-white/60 w-36 py-2 rounded-xl text-white/80 uppercase tracking-widest cursor-pointer"
             onClick={() => setRulesOpen(true)}
             title="Rules of the game"
           >
