@@ -95,7 +95,7 @@ function App() {
   useEffect(() => {
     if (step === 3 && houseChoice) {
       const tl = gsap.timeline();
-      const isMobile = window.innerWidth < 768;
+      // const isMobile = window.innerWidth < 768;
 
       // House scales/fades in
       tl.fromTo(
