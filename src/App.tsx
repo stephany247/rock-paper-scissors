@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import Scoreboard from "./components/ScoreBoard";
 import RulesModal from "./components/RulesModal";
 import Choice from "./components/Choice";
@@ -24,55 +23,6 @@ function App() {
     mode === "default"
       ? ["rock", "paper", "scissors"]
       : ["rock", "paper", "scissors", "lizard", "spock"];
-
-  // const handlePick = (choice: string) => {
-  //   // capture the board state before React moves things
-  //   // const state = Flip.getState(".choice");
-
-  //   setPlayerChoice(choice);
-  //   setStep(2); // go to step 2 (player picked)
-
-  //   // animate from board → player slot
-  //   // Flip.from(state, {
-  //   //   duration: 0.6,
-  //   //   ease: "power2.inOut",
-  //   //   absolute: true,
-  //   //   nested: true,
-  //   //   scale: true,
-  //   // });
-
-  //   const house = choices[Math.floor(Math.random() * choices.length)];
-
-  //   // after 1 second → show house pick
-  //   setTimeout(() => {
-  //     setHouseChoice(house);
-  //     setStep(3);
-
-  //     // after another 1 second → calculate winner
-  //     // setTimeout(() => {
-  //       if (choice === house) {
-  //         setWinner("draw");
-  //       } else {
-  //         const rules: Record<string, string[]> = {
-  //           rock: ["scissors", "lizard"],
-  //           paper: ["rock", "spock"],
-  //           scissors: ["paper", "lizard"],
-  //           lizard: ["spock", "paper"],
-  //           spock: ["scissors", "rock"],
-  //         };
-
-  //         if (rules[choice].includes(house)) {
-  //           setWinner("player");
-  //           setScore((prev) => prev + 1);
-  //         } else {
-  //           setWinner("house");
-  //         }
-  //       }
-
-  //       setStep(4); // show result
-  //     // }, 1000);
-  //   }, 1000);
-  // };
 
   const handlePick = (choice: string) => {
     setPlayerChoice(choice);
@@ -141,47 +91,6 @@ function App() {
     }
   }, [step, playerChoice]);
 
-  // Animate house pick (step 3)
-  // useEffect(() => {
-  //   if (step === 3 && houseChoice) {
-  //     gsap.fromTo(
-  //       ".house-choice",
-  //       { opacity: 0.4, scale: 0.8 },
-  //       {
-  //         opacity: 1,
-  //         scale: 1,
-  //         duration: 0.6,
-  //         ease: "back.out(1.7)",
-  //         onComplete: () => {
-  //           gsap.to(".house-choice", {
-  //             x: 10,
-  //             duration: 0.3,
-  //             ease: "power1.inOut",
-  //             delay: 0.7,
-  //           });
-  //           gsap.to(".house-choice-block > h2", {
-  //             x: 10,
-  //             duration: 0.3,
-  //             delay: 0.7,
-  //           });
-  //           gsap.to(".player-choice", {
-  //             x: -10,
-  //             duration: 0.3,
-  //             ease: "power1.inOut",
-  //             delay: 0.7,
-  //           });
-  //           gsap.to(".player-choice-block > h2", {
-  //             x: -10,
-  //             duration: 0.3,
-  //             delay: 0.7,
-  //           });
-  //         },
-  //         // delay: 0.5, // small suspense delay
-  //       }
-  //     );
-  //   }
-  // }, [step, houseChoice]);
-
   useEffect(() => {
     if (step === 3 && houseChoice) {
       const tl = gsap.timeline();
@@ -235,7 +144,6 @@ function App() {
   }, [step, houseChoice]);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 640; // Tailwind "sm" breakpoint
     if (step === 4 && winner) {
       gsap.fromTo(
         ".ring-a",
@@ -247,7 +155,6 @@ function App() {
         { scale: 0.8, opacity: 0 },
         {
           scale: 1.8,
-          // opacity: 0.25,
           opacity: 0.1,
           duration: 0.8,
           delay: 0.2,
@@ -259,7 +166,6 @@ function App() {
         { scale: 0.8, opacity: 0 },
         {
           scale: 2.2,
-          // opacity: 0.15,
           opacity: 0.05,
           duration: 1,
           delay: 0.4,
@@ -318,15 +224,11 @@ function App() {
                 <div className="w-34 h-34 sm:w-40 sm:h-40 lg:w-60 lg:h-60 bg-darker-blue/20 rounded-full" /> // placeholder before reveal
               )}
               <h2 className="who-picked text-nowrap">The House Picked</h2>
-              {/* <h2 className="inline-block md:hidden who-picked">
-                The House Picked
-              </h2> */}
             </div>
           </div>
         )}
 
         {/* Rules button */}
-        {/* {step === 1 && ( */}
         <div className="mt-auto flex justify-between w-full">
           <button
             className="bg-white w-40 py-2 rounded-xl uppercase cursor-pointer"
@@ -349,7 +251,6 @@ function App() {
             Rules
           </button>
         </div>
-        {/* )} */}
 
         {/* Rules Modal */}
         <RulesModal

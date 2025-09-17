@@ -1,5 +1,4 @@
 import { useRef, useEffect, type FC, useState } from "react";
-// import gsap from "gsap";
 import rulesDefault from "../assets/images/image-rules.svg";
 import rulesBonus from "../assets/images/image-rules-bonus.svg";
 import iconClose from "../assets/images/icon-close.svg";
@@ -72,7 +71,6 @@ const RulesModal: FC<RulesModalProps> = ({ open, mode, onClose }) => {
         <div className="hidden sm:flex items-center justify-between w-full">
           <h2 className="text-2xl font-bold uppercase">Rules</h2>
           <button
-            // className="absolute top-2 right-2 text-2xl font-bold"
             className="cursor-pointer"
             onClick={onClose}
           >
@@ -85,7 +83,6 @@ const RulesModal: FC<RulesModalProps> = ({ open, mode, onClose }) => {
           className={`mx-auto mb-1 ${mode === "default" ? "mb-1" : "mb-4"}`}
         />
         <button
-          // className="absolute top-2 right-2 text-2xl font-bold"
           className="sm:hidden cursor-pointer"
           onClick={onClose}
         >

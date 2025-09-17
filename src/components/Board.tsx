@@ -1,7 +1,5 @@
 import type { FC } from "react";
 import Choice from "./Choice";
-// import triangleBg from "../assets/images/bg-triangle.svg";
-// import pentagonBg from "../assets/images/bg-pentagon.svg";
 
 interface BoardProps {
   mode: "default" | "extended";
@@ -12,17 +10,17 @@ const Board: FC<BoardProps> = ({ mode, onPick }) => {
   return mode === "default" ? (
     // Triangle layout
     <div className="grid grid-cols-3 grid-rows-3 w-80 h-80 sm:w-92 sm:h-92 md:w-120 md:h-120 my-24 mx-auto bg-[url(/bg-triangle.svg)] bg-no-repeat bg-center bg-size-[90%]">
-      {/* scissors (top middle) */}
+      {/* scissors */}
       <div className="flex items-center justify-center col-start-3 row-start-1">
         <Choice type="scissors" onPick={onPick} />
       </div>
 
-      {/* paper (top left) */}
+      {/* paper */}
       <div className="flex items-center justify-center col-start-1 row-start-1">
         <Choice type="paper" onPick={onPick} />
       </div>
 
-      {/* rock (bottom middle) */}
+      {/* rock */}
       <div className="flex items-center justify-center col-start-2 row-start-3">
         <Choice type="rock" onPick={onPick} />
       </div>

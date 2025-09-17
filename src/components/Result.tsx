@@ -1,6 +1,4 @@
-import gsap from "gsap";
-import { type FC, useEffect, useRef } from "react";
-// import gsap from "gsap";
+import { type FC } from "react";
 
 interface ResultProps {
   winner: "player" | "house" | "draw" | null;
@@ -8,31 +6,6 @@ interface ResultProps {
 }
 
 const Result: FC<ResultProps> = ({ winner, onPlayAgain }) => {
-  const resultRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (winner && resultRef.current) {
-      // 🔥 Animate result popping in
-      // gsap.from(resultRef.current, {
-      //   opacity: 1,
-      //   // scale: 0.8,
-      //   duration: 0.6,
-      //   ease: "back.out(1.7)"
-      // });
-      // gsap.fromTo(
-      //   resultRef.current,
-      //   { opacity: 0 },
-      //   { opacity: 1, duration: 0.7, ease: "power.out" }
-      // );
-      // gsap.to(resultRef.current, {
-      //   opacity: 1,
-      //   y: 14,
-      //   duration: 0.7,
-      //   ease: "power3.out",
-      // });
-    }
-  }, [winner]);
-
   if (!winner) return null;
 
   const getMessage = () => {
@@ -48,7 +21,6 @@ const Result: FC<ResultProps> = ({ winner, onPlayAgain }) => {
 
   return (
     <div
-      ref={resultRef}
       className="result col-span-2 row-start-2  md:col-span-1 md:row-span-1 space-y-4 mt-auto md:my-auto flex flex-col items-center z-10"
     >
       <h2 className="text-5xl md:text-6xl text-white text-center">

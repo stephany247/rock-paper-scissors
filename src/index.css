@@ -28,7 +28,6 @@
   --color-dark-blue: hsl(214, 47%, 23%);
   --color-darker-blue: hsl(237, 48%, 15%);
 
-  /* - Radial Gradient: hsl(214, 47%, 23%) to hsl(237, 48%, 15%) */
 
   /* shadows  */
   --inset-shadow-md: inset 0 0.3em rgba(0, 0, 0, 0.25);
@@ -46,21 +45,10 @@
   @apply bg-radial-[at_50%_75%] from-dark-blue from-10% to-darker-blue to-90%;
 }
 
-#root {
-  /* max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center; */
-  /* @apply; */
-}
-
 .who-picked {
   @apply  text-center text-white text-lg;
 }
 
-/* .ring-element {
-  @apply absolute inset-0 rounded-full border-[30px] border-white/20 -z-10;
-} */
 .ring-element {
   @apply absolute inset-0 rounded-full bg-white/30 md:bg-white/40;
 }

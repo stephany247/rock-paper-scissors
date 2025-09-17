@@ -19,27 +19,6 @@ const Scoreboard: FC<ScoreboardProps> = ({ score, mode, onReset }) => {
     if (score > prevScore) {
       setShowIncrement(true);
 
-      // animate +1 floating up
-      // gsap.fromTo(
-      //   ".score-increment",
-      //   { y: 0, opacity: 1, scale: 1.8 },
-      //   {
-      //     y: -40,
-      //     opacity: 0,
-      //     scale: 0,
-      //     duration: 0.6,
-      //     ease: "power2.inOut",
-      //     onComplete: () => setShowIncrement(false),
-      //   }
-      // );
-
-      // animate new score bouncing in
-      // gsap.fromTo(
-      //   ".score-value",
-      //   { scale: 1.6, opacity: 0.5 },
-      //   { scale: 1, opacity: 1, delay: 0.1, duration: 0.6, ease: "bounce.inOut" }
-      // );
-
       const tl = gsap.timeline();
 
       tl.fromTo(

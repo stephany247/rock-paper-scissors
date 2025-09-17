@@ -21,8 +21,8 @@ const images = {
 
 const Choice: FC<ChoiceProps> = ({ type, onPick, extended }) => {
   const sizeClasses = extended
-    ? "w-28 h-28 sm:w-32 sm:h-32 border-12" // smaller for bonus mode
-    : `${onPick ? "w-full h-full" : "w-34 h-34 sm:w-40 sm:h-40 lg:w-60 lg:h-60"}  border-16 lg:border-24`; // default mode
+    ? "w-28 h-28 sm:w-32 sm:h-32 border-12" // smaller for extended mode
+    : `${onPick ? "w-full h-full" : "w-34 h-34 sm:w-40 sm:h-40 lg:w-60 lg:h-60"} border-16 lg:border-24`; // default mode
 
   return (
     <button
