@@ -185,6 +185,7 @@ function App() {
   useEffect(() => {
     if (step === 3 && houseChoice) {
       const tl = gsap.timeline();
+      const isMobile = window.innerWidth < 768;
 
       // House scales/fades in
       tl.fromTo(
@@ -204,6 +205,7 @@ function App() {
         [".house-choice", ".player-choice"],
         {
           x: (i) => (i === 0 ? 20 : -20), // house +10, player -10
+
           duration: 0.3,
           ease: "power1.inOut",
         },
@@ -212,24 +214,25 @@ function App() {
 
       // Slide texts in without ease (linear)
       tl.to(
-        [".house-choice-block > h2", ".player-choice-block > h2"],
+        [".house-choice-block h2", ".player-choice-block h2"],
         {
-          x: (i) => (i === 0 ? 20 : -20),
+          // x: (i) => (i === 0 ? 20 : -20),
+          x: (i) => {
+            if (isMobile) {
+              // mobile
+              return i === 0 ? 10 : -10;
+            } else {
+              // desktop
+              return i === 0 ? 20 : -20;
+            }
+          },
           duration: 0.3,
-          ease: "none", // 👈 exactly like your code
+          ease: "none",
         },
         "<" // run at same time as circles
       );
     }
   }, [step, houseChoice]);
-
-  //   useEffect(() => {
-  //   gsap.fromTo(
-  //     ".score-value",
-  //     { scale: 1.5, opacity: 0.7 },
-  //     { scale: 1, opacity: 1, duration: 0.4, ease: "bounce.out" }
-  //   );
-  // }, [score]);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 640; // Tailwind "sm" breakpoint
@@ -267,15 +270,14 @@ function App() {
   }, [step, winner]);
 
   return (
-    <>
-      <main className="min-h-screen flex flex-col items-center">
+    <div className="overflow-x-hidden">
+      <main className="min-h-screen flex flex-col items-center p-6 mx-auto">
         <Scoreboard score={score} mode={mode} />
         {step === 1 && <Board mode={mode} onPick={handlePick} />}
         {step >= 2 && (
-          <div className="grid grid-cols-2 md:grid-cols-3 md:grid-rows-1 items-start mt-10 max-w-3xl mx-auto">
+          <div className="m-auto grid grid-cols-2 grid-rows-2 md:grid-rows-1 md:grid-cols-3 items-start max-w-4xl w-full mx-auto">
             {/* Player pick */}
-            <div className="player-choice-block flex flex-col items-center justify-center gap-8">
-              <h2 className="hidden md:block who-picked">You Picked</h2>
+            <div className="player-choice-block flex flex-col md:flex-col-reverse items-center justify-center gap-8 md:gap-10">
               <div className="player-choice relative">
                 {playerChoice && (
                   <>
@@ -290,13 +292,13 @@ function App() {
                   </>
                 )}
               </div>
-              <h2 className="block md:hidden who-picked">You Picked</h2>
+              <h2 className="who-picked">You Picked</h2>
+              {/* <h2 className="block md:hidden who-picked">You Picked</h2> */}
             </div>
             {step === 4 && <Result winner={winner} onPlayAgain={resetGame} />}
 
             {/* House pick */}
-            <div className="house-choice-block md:col-start-3 flex flex-col items-center justify-center gap-8">
-              <h2 className="hidden md:block who-picked">The House Picked</h2>
+            <div className="house-choice-block col-start-2 md:col-start-3 flex flex-col md:flex-col-reverse items-center justify-center gap-8 md:gap-10">
               {step >= 3 ? (
                 <div className="house-choice relative">
                   {houseChoice && (
@@ -315,7 +317,10 @@ function App() {
               ) : (
                 <div className="w-34 h-34 sm:w-40 sm:h-40 lg:w-60 lg:h-60 bg-darker-blue/20 rounded-full" /> // placeholder before reveal
               )}
-              <h2 className="block md:hidden who-picked">The House Picked</h2>
+              <h2 className="who-picked text-nowrap">The House Picked</h2>
+              {/* <h2 className="inline-block md:hidden who-picked">
+                The House Picked
+              </h2> */}
             </div>
           </div>
         )}
@@ -353,7 +358,7 @@ function App() {
           onClose={() => setRulesOpen(false)}
         />
       </main>
-    </>
+    </div>
   );
 }
 

@@ -26,7 +26,7 @@ const Choice: FC<ChoiceProps> = ({ type, onPick, extended }) => {
 
   return (
     <button
-      className={`${sizeClasses} rounded-full flex items-center justify-center bg-white ${onPick ? "cursor-pointer inset-shadow-md" : "inner-shadow-sm"} ${
+      className={`${sizeClasses} rounded-full flex items-center justify-center bg-white inset-shadow-md ${onPick ? "cursor-pointer" : ""} ${
         type === "rock"
           ? "border-red-600 shadow-red"
           : type === "paper"
