@@ -126,16 +126,16 @@ function App() {
       tl.to(
         [".house-choice-block h2", ".player-choice-block h2"],
         {
-          // x: (i) => (i === 0 ? 20 : -20),
-          x: (i) => {
-            if (isMobile) {
-              // mobile
-              return i === 0 ? 10 : -10;
-            } else {
-              // desktop
-              return i === 0 ? 20 : -20;
-            }
-          },
+          x: (i) => (i === 0 ? 20 : -20),
+          // x: (i) => {
+          //   if (isMobile) {
+          //     // mobile
+          //     return i === 0 ? 10 : -10;
+          //   } else {
+          //     // desktop
+          //     return i === 0 ? 20 : -20;
+          //   }
+          // },
           duration: 0.3,
           ease: "none",
         },
@@ -233,7 +233,7 @@ function App() {
         {/* Rules button */}
         <div className="mt-auto flex justify-between w-full">
           <button
-            className="bg-white w-40 py-2 rounded-xl uppercase cursor-pointer"
+            className="border-2 border-white/60 text-white/80 hover:text-white hover:border-white hover:scale-105 transition-all duration-300 ease-in-out w-40 md:w-44 py-2 rounded-xl uppercase cursor-pointer"
             onClick={() => {
               setMode(mode === "default" ? "extended" : "default");
               resetGame();
@@ -246,7 +246,7 @@ function App() {
           </button>
 
           <button
-            className="border-2 border-white/60 w-36 py-2 rounded-xl text-white/80 uppercase tracking-widest cursor-pointer"
+            className="border-2 border-white/60 hover:text-white hover:border-white hover:scale-105 transition-all duration-300 ease-in-out w-36 py-2 rounded-xl text-white/80 uppercase tracking-widest cursor-pointer"
             onClick={() => setRulesOpen(true)}
             title="Rules of the game"
           >

@@ -81,7 +81,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ score, mode, onReset }) => {
       <img
         src={mode === "default" ? defaultImg : bonusImg}
         alt="game logo"
-        className="p-2 max-w-2/5"
+        className="p-0 sm:p-2 max-w-2/5"
       />
       <div className="bg-white rounded py-3 w-2/5 max-w-28 h-auto flex flex-col items-center justify-center">
         <p className="text-lg text-blue-700 uppercase font-semibold">Score</p>
