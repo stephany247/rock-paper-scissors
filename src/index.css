@@ -53,3 +53,27 @@
   @apply absolute inset-0 rounded-full bg-white/30 md:bg-white/40;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* track */
+::-webkit-scrollbar-track {
+  @apply bg-dark-blue
+}
+
+/* thumb */
+::-webkit-scrollbar-thumb {
+  @apply rounded-full border-2 bg-navy-900;
+}
+
+/* thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-700;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(229, 25%, 31%) hsl(237, 48%, 15%);
+}
