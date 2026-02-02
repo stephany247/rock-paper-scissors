@@ -11,14 +11,23 @@ import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [mode, setMode] = useState<"default" | "extended">("default");
-  const [score, setScore] = useState(0);
+  // const [score, setScore] = useState(0);
+  const [score, setScore] = useState(() => {
+  const saved = localStorage.getItem("score");
+  return saved ? Number(saved) : 0;
+});
+
   const [winner, setWinner] = useState<"player" | "house" | "draw" | null>(
-    null
+    null,
   );
   const [rulesOpen, setRulesOpen] = useState(false);
   const [playerChoice, setPlayerChoice] = useState<string | null>(null);
   const [houseChoice, setHouseChoice] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+
+  useEffect(() => {
+    localStorage.setItem("score", String(score));
+  }, [score]);
 
   const choices =
     mode === "default"
@@ -42,7 +51,7 @@ function App() {
           setHouseChoice(house);
           setStep(3);
         },
-      }
+      },
     );
 
     // after another 1s, decide winner
@@ -71,7 +80,7 @@ function App() {
           }
           setStep(4);
         },
-      }
+      },
     );
   };
 
@@ -87,7 +96,7 @@ function App() {
       gsap.fromTo(
         ".player-choice",
         { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }
+        { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
       );
     }
   }, [step, playerChoice]);
@@ -95,20 +104,19 @@ function App() {
   useEffect(() => {
     if (step === 3 && houseChoice) {
       const tl = gsap.timeline();
-      // const isMobile = window.innerWidth < 768;
 
       // House scales/fades in
       tl.fromTo(
         ".house-choice",
         { opacity: 0.4, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
+        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
       );
 
       // Fade in Result (text block with "You Win/You Lose")
       tl.fromTo(
         ".result",
         { opacity: 0, scale: 0.9, y: 80 },
-        { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power1.out" }
+        { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power1.out" },
       );
       // Slide circles in with ease
       tl.to(
@@ -119,7 +127,7 @@ function App() {
           duration: 0.3,
           ease: "power1.inOut",
         },
-        "<"
+        "<",
       );
 
       // Slide texts in without ease (linear)
@@ -127,19 +135,10 @@ function App() {
         [".house-choice-block h2", ".player-choice-block h2"],
         {
           x: (i) => (i === 0 ? 20 : -20),
-          // x: (i) => {
-          //   if (isMobile) {
-          //     // mobile
-          //     return i === 0 ? 10 : -10;
-          //   } else {
-          //     // desktop
-          //     return i === 0 ? 20 : -20;
-          //   }
-          // },
           duration: 0.3,
           ease: "none",
         },
-        "<" // run at same time as circles
+        "<", // run at same time as circles
       );
     }
   }, [step, houseChoice]);
@@ -149,7 +148,7 @@ function App() {
       gsap.fromTo(
         ".ring-a",
         { scale: 0.8, opacity: 0 },
-        { scale: 1.4, opacity: 0.2, duration: 0.6, ease: "power2.out" }
+        { scale: 1.4, opacity: 0.2, duration: 0.6, ease: "power2.out" },
       );
       gsap.fromTo(
         ".ring-b",
@@ -160,7 +159,7 @@ function App() {
           duration: 0.8,
           delay: 0.2,
           ease: "power2.out",
-        }
+        },
       );
       gsap.fromTo(
         ".ring-c",
@@ -171,7 +170,7 @@ function App() {
           duration: 1,
           delay: 0.4,
           ease: "power2.out",
-        }
+        },
       );
     }
   }, [step, winner]);
